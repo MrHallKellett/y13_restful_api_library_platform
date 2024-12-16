@@ -1,0 +1,41 @@
+<html>
+
+    <head>
+        <title>Library App</title>
+
+        <!-- import pyscript dependencies -->
+        <link rel="stylesheet" href="https://pyscript.net/releases/2022.12.1/pyscript.css" />
+        <link rel="stylesheet" href="https://pyscript.net/releases/2024.1.3/core.css">
+        <script type="module" src="https://pyscript.net/releases/2024.1.3/core.js"></script>
+        <style>
+
+            table, td, tr
+            {
+                border: thin black solid;
+                width: 900px;
+                text-align: center;
+            }
+
+        </style>
+
+    </head>
+
+
+    <body>
+
+        <!-- create a UI for user to send data -->
+        <label for="example_textbox">
+            Click to retrieve all books: 
+            <button id="get_all_books">Get All Books</button>
+        </label>
+
+        <!-- create a container for client to display server responses -->
+        <table id="book_table"></table>
+
+        <!-- load client side scripts -->
+        <py-script src="static/client.py"></py-script>
+
+    </body>
+
+
+</html>

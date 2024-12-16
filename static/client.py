@@ -4,7 +4,7 @@ from pyscript import document, when         # for using JS type functions and ma
 from pyodide.http import pyfetch            # for making requests to the server
 from json import loads, dumps               # for handling json
 
-###############################################################
+###############################################################sn
 
 def display_response(response):
     '''Given a response from the server, display it on the 
@@ -13,6 +13,30 @@ def display_response(response):
     new_response.innerHTML = response                   # set the content INSIDE the element
     responses = document.getElementById("responses")    # get an existing element
     responses.appendChild(new_response)                 # add the new element to the DOM (which is a tree!) 
+
+def display_all_books(books):
+    '''Creates a table when the get all books button has been pressed'''
+    table = document.getElementById("book_table")
+    table.innerHTML = "" # reset the table
+    body = document.getElementsByTagName("body")[0]
+    body.appendChild(table)
+
+    row = document.createElement("tr")
+    table.appendChild(row)
+    for key in books[0].keys():
+        element = document.createElement("th")
+        row.appendChild(element)
+        element.innerHTML = key.title()
+    
+    
+    for book in books:
+        row = document.createElement("tr")
+        table.appendChild(row)
+        for field in book.values():
+            element = document.createElement("td")
+            row.appendChild(element)
+            element.innerHTML = field
+        
 
 ###############################################################
 
@@ -33,12 +57,22 @@ async def write_to_server(some_data):
     print(f"Received a response: {response}")
     display_response(response["message"])
 
+async def get_all_books():
+    '''Retrieves all books from the database'''
+    print(f"Fetching books")
+    allBooksResult = await pyfetch(
+        url="api/books",
+        method="GET"
+    )
+    allBooksResponse = await allBooksResult.json()
+    display_all_books(allBooksResponse)
+
+
+
 ###############################################################
 
-@when("click", "button")                                        # map a Python function to a HTML5 event.
+@when("click", "#get_all_books")                                        # map a Python function to a HTML5 event.
 def handle(event):
-    data = document.getElementById("example_textbox").value     # extract some data from the DOM..
-    print(data)
-    asyncio.ensure_future(write_to_server(data))                # run your async function from the event handler
+    asyncio.ensure_future(get_all_books())                # run your async function from the event handler
 
 ###############################################################
