@@ -6,7 +6,7 @@ from json import loads, dumps               # for handling json
 
 ###############################################################
 
-def display_response(response):
+def display_response(response: str):
     '''Given a response from the server, display it on the 
     response container on the HTML page'''
     new_response = document.createElement("li")         # create a new element
@@ -16,7 +16,7 @@ def display_response(response):
 
 ###############################################################
 
-async def write_to_server(some_data):
+async def write_to_server(some_data: str):
     '''An asynchronous function to send data to the server
     whenever needed'''
 
