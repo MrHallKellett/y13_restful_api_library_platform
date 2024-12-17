@@ -16,21 +16,49 @@
                 text-align: center;
             }
 
+            .hide_section
+            {
+                display:none;
+            }
+
         </style>
 
     </head>
 
 
     <body>
+        <button  id="get_all_books_menu_btn">Get All Books</button>
+        <button  id="search_books_menu_btn">Search For A Book</button>
+        <button  id="loan_book_menu_btn">Loan A Book</button>
+        <button  id="add_new_book_menu_btn">Add A New Book</button>
+        <button  id="delete_book_menu_btn">Delete Books</button>
 
+
+
+        <div id="get_all_books"
         <!-- create a UI for user to send data -->
-        <label for="example_textbox">
-            Click to retrieve all books: 
-            <button id="get_all_books">Get All Books</button>
-        </label>
 
-        <!-- create a container for client to display server responses -->
-        <table id="book_table"></table>
+
+        <!-- create containers for client to display server responses -->
+        <section id="get_all_books_section">
+            <h1>Viewing All Books Data</h1>
+            <table id="all_book_table"></table>
+        </section>
+
+        <section id="search_books_section">
+            <h1>Search For A Book</h1>
+            <label for="search_book_input">
+                <input id="search_book_input" name="search_book_input"/>
+            </label>
+            <button id="perform_search_btn">GO!</button>
+            <table id="search_result_table"></table>
+        </section>
+
+        <section id="loan_book_section"></section>
+
+        <section id="add_new_book_section"></section>
+
+        <section id="delete_book_section"></section>
 
         <!-- load client side scripts -->
         <py-script src="static/client.py"></py-script>

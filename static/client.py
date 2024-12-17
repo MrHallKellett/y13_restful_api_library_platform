@@ -4,7 +4,26 @@ from pyscript import document, when         # for using JS type functions and ma
 from pyodide.http import pyfetch            # for making requests to the server
 from json import loads, dumps               # for handling json
 
-###############################################################sn
+###############################################################
+
+# create a list of all sections
+sections = [document.getElementById(f"{section}_section") for section in '''get_all_books
+search_books
+loan_book
+add_new_book
+delete_book'''.splitlines()]
+
+################################################################
+
+def hide_sections_except(this_section):
+    for section in sections:
+        print(section.id, "vs", this_section)
+        if section.id != this_section:
+            section.classList.add("hide_section")
+        else:
+            section.classList.remove("hide_section")
+
+################################################################
 
 def display_response(response: str):
     '''Given a response from the server, display it on the 
@@ -14,9 +33,11 @@ def display_response(response: str):
     responses = document.getElementById("responses")    # get an existing element
     responses.appendChild(new_response)                 # add the new element to the DOM (which is a tree!) 
 
+################################################################
+
 def display_all_books(books):
     '''Populates the table when the get all books button has been pressed'''
-    table = document.getElementById("book_table")
+    table = document.getElementById("all_book_table")
     table.innerHTML = "" # reset the table
     body = document.getElementsByTagName("body")[0]
     body.appendChild(table)
@@ -58,6 +79,12 @@ async def write_to_server(some_data: str):
 
 ###############################################################
 
+async def search_books(query):
+    '''Search the database for a particular term'''
+
+
+###############################################################
+
 async def get_all_books():
     '''Retrieves all books from the database'''
     print(f"Fetching books")
@@ -70,8 +97,19 @@ async def get_all_books():
 
 ###############################################################
 
-@when("click", "#get_all_books")                          # map a Python function to a HTML5 event.
+@when("click", "button")                                                   # run the event handler for ALL buttons
 def handle(event):
-    asyncio.ensure_future(get_all_books())                # run your async function from the event handler
+    btn_id = event.target.id
+    section_to_show = btn_id.replace("_menu_btn", "_section")
+    hide_sections_except(section_to_show)
+    if section_to_show == "get_all_books_section":
+        asyncio.ensure_future(get_all_books())                            # run your async function from the event handler
+    
+    if btn_id == "perform_search_btn":
+        search_query = document.getElementById("search_book_input").value
+        asyncio.ensure_future(search_books(search_query))                # run your async function from the event handler
+
 
 ###############################################################
+
+
