@@ -21,23 +21,23 @@ def get_data_from_client():
 def get_books():
     with Database() as db:
         book_query = "SELECT * FROM Books"
-        all_books = db.executeWrapper(book_query)
+        all_books = db.execute_wrapper(book_query)
         print(all_books)
         books = parse_into_json(all_books)
     return books
 
 
 def parse_into_json(data):
-    jsonDicts = []
+    all_books = []
     for row in data:
-        elementDict = {}
-        listOfElements = ["id", "isbn", "title", "author", "publisher", "publish year", "category", "total copies", "available copies"]
-        for i in range(0, len(listOfElements)):
-            elementDict.update({listOfElements[i]: row[i]})
-        jsonDicts.append(elementDict)
+        book = {}
+        fields = ["id", "isbn", "title", "author", "publisher", "publish year", "category", "total copies", "available copies"]
+        for i in range(len(fields)):
+            book.update({fields[i]: row[i]})
+        all_books.append(book)
         
     
-    return jsonDicts
+    return all_books
 
 
 if __name__ == "__main__":

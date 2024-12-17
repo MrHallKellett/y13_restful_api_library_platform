@@ -11,7 +11,7 @@ class Database:
   def __exit__(self, type, value, traceback):
     self.__connection.close()
 
-  def executeWrapper(self, query, params=None, one_row=False):
+  def execute_wrapper(self, query, params=None, one_row=False):
     if not params:
       results = self.__cursor.execute(query)
     else:
