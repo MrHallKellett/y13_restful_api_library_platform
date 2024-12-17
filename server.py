@@ -29,8 +29,11 @@ def get_books(query=None):
         all_books = db.execute_wrapper(book_query)
         print(all_books)
         books = parse_into_json(all_books)
-    print(books)
-    return make_response({"data":books}, 200)
+    
+    if len(books) == 0:
+        return make_response({"data":None}, 200)
+    else:
+        return make_response({"data":books}, 200)
 
 
 def parse_into_json(data):

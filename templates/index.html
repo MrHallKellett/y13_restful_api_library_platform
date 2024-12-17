@@ -21,7 +21,11 @@
               display:none;
             }
 
-        
+            .temporary_error
+            {
+                animation:5s linear 2s infinite alternate;
+            }
+
         </style>
 
     </head>
@@ -36,7 +40,10 @@
 
 
 
+        <div style="color:red; height:50px;"
+        id="error_box" >
     
+        </div>
       
 
 
@@ -56,9 +63,7 @@
         </section>
 
         <section  class="hide_section" id="loan_book_section"></section>
-
         <section  class="hide_section" id="add_new_book_section"></section>
-
         <section  class="hide_section" id="delete_book_section"></section>
 
         <table id="all_book_table"></table>

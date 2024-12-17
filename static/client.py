@@ -78,29 +78,51 @@ async def write_to_server(some_data: str):
     display_response(response["message"])
 
 ###############################################################
+    
+def show_error(msg):
+    error_box = document.getElementById("error_box")
+    error_box.innerHTML = msg
+    error_box.classList.add("temporary_error")
+
+
+###############################################################
 
 async def search_books(query):
     '''Search the database for a particular term'''
     print(f"Searching books for {query}")
+
     search_books = await pyfetch(
         url="api/books/" + query,
         method="GET"
     )
-    
+
     search_books_response = await search_books.json()
-    display_all_books(search_books_response["data"])
+    books_found = search_books_response["data"]
+
+    if len(books_found) == 0:
+        show_error("Nothing was found")
+    else:        
+        display_all_books(books_found)
 
 ###############################################################
 
 async def get_all_books():
     '''Retrieves all books from the database'''
     print(f"Fetching books")
+    
     all_books_result = await pyfetch(
         url="api/books",
         method="GET"
     )
+    
     print("getting the books")
+    
     all_books_response = await all_books_result.json()
+    
+    print(e)
+        
+
+    print(all_books_response.status, "Was the status!")
     print("got the books")
     display_all_books(all_books_response["data"])
 
