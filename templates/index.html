@@ -18,9 +18,10 @@
 
             .hide_section
             {
-                display:none;
+              display:none;
             }
 
+        
         </style>
 
     </head>
@@ -35,30 +36,32 @@
 
 
 
-        <div id="get_all_books"
-        <!-- create a UI for user to send data -->
+    
+      
 
 
         <!-- create containers for client to display server responses -->
-        <section id="get_all_books_section">
+        <section class="hide_section" id="get_all_books_section">
             <h1>Viewing All Books Data</h1>
-            <table id="all_book_table"></table>
+            
         </section>
 
-        <section id="search_books_section">
+        <section  class="hide_section" id="search_books_section">
             <h1>Search For A Book</h1>
             <label for="search_book_input">
                 <input id="search_book_input" name="search_book_input"/>
             </label>
             <button id="perform_search_btn">GO!</button>
-            <table id="search_result_table"></table>
+            
         </section>
 
-        <section id="loan_book_section"></section>
+        <section  class="hide_section" id="loan_book_section"></section>
 
-        <section id="add_new_book_section"></section>
+        <section  class="hide_section" id="add_new_book_section"></section>
 
-        <section id="delete_book_section"></section>
+        <section  class="hide_section" id="delete_book_section"></section>
+
+        <table id="all_book_table"></table>
 
         <!-- load client side scripts -->
         <py-script src="static/client.py"></py-script>

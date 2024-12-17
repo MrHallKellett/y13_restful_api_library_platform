@@ -17,14 +17,20 @@ def get_data_from_client():
 
     return make_response({"message":f"you said {x}!"}, 200)
 
+
+@app.route("/api/books/<query>")  # add an optional part of the URL
 @app.route("/api/books")
-def get_books():
+def get_books(query=None):
     with Database() as db:
-        book_query = "SELECT * FROM Books"
+        if query:
+            book_query = f'SELECT * FROM Books WHERE Title LIKE "%{query}%"'
+        else:
+            book_query = "SELECT * FROM Books"
         all_books = db.execute_wrapper(book_query)
         print(all_books)
         books = parse_into_json(all_books)
-    return books
+    print(books)
+    return make_response({"data":books}, 200)
 
 
 def parse_into_json(data):

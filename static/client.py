@@ -81,7 +81,14 @@ async def write_to_server(some_data: str):
 
 async def search_books(query):
     '''Search the database for a particular term'''
-
+    print(f"Searching books for {query}")
+    search_books = await pyfetch(
+        url="api/books/" + query,
+        method="GET"
+    )
+    
+    search_books_response = await search_books.json()
+    display_all_books(search_books_response["data"])
 
 ###############################################################
 
@@ -92,8 +99,10 @@ async def get_all_books():
         url="api/books",
         method="GET"
     )
+    print("getting the books")
     all_books_response = await all_books_result.json()
-    display_all_books(all_books_response)
+    print("got the books")
+    display_all_books(all_books_response["data"])
 
 ###############################################################
 
@@ -101,12 +110,26 @@ async def get_all_books():
 def handle(event):
     btn_id = event.target.id
     section_to_show = btn_id.replace("_menu_btn", "_section")
+
+    # OH NO, should not do this
+    # if it's not a section menu button...
     hide_sections_except(section_to_show)
+
+    book_table = document.getElementById("all_book_table")
+    search_table = document.getElementById("search_result_table")
+
     if section_to_show == "get_all_books_section":
-        asyncio.ensure_future(get_all_books())                            # run your async function from the event handler
-    
+        book_table.hidden = False
+        asyncio.ensure_future(get_all_books())                            # run your async function from the event handler  
+    else:
+        book_table.hidden = True
+        
+
+
     if btn_id == "perform_search_btn":
+        book_table.hidden = False
         search_query = document.getElementById("search_book_input").value
+        
         asyncio.ensure_future(search_books(search_query))                # run your async function from the event handler
 
 
