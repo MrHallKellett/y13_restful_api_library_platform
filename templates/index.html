@@ -63,7 +63,28 @@
         </section>
 
         <section  class="hide_section" id="loan_book_section"></section>
-        <section  class="hide_section" id="add_new_book_section"></section>
+        <section  class="hide_section" id="add_new_book_section">
+            <form>
+                {% set headings = "Author	Available Copies	Category	Id	Isbn	Publish Year	Publisher	Title	Total Copies".split("\t") %}
+                <table>
+                {% for heading in headings %}
+                    {% set heading_id = heading.lower().replace(" ", "_") %}
+                    <tr>
+                        <td>
+                            <label for="{{heading_id}}">{{heading}}:</label>
+                        </td>
+                        <td>
+                            <input name="{{heading_id}}" id="{{heading_id}}_input"/><br>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+
+            <button id="add_book_btn">SAVE</button>
+            </form>
+
+        </section>
+        
         <section  class="hide_section" id="delete_book_section"></section>
 
         <table id="all_book_table"></table>

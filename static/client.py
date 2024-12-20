@@ -119,10 +119,10 @@ async def get_all_books():
     
     all_books_response = await all_books_result.json()
     
-    print(e)
+    
         
 
-    print(all_books_response.status, "Was the status!")
+    #print(all_books_response.status, "Was the status!")
     print("got the books")
     display_all_books(all_books_response["data"])
 
